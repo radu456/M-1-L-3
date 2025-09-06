@@ -1,29 +1,29 @@
-const CACHE_NAME = 'povesti-magice-v1';
+const CACHE_NAME = 'idei-trasnite-v1';
 const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
-// Instalarea service worker-ului
-self.addEventListener('install', event => {
+// Install event - cache resources
+self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Cache deschis');
+      .then(function(cache) {
+        console.log('Cache opened');
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-// Interceptarea cererilor de rețea
-self.addEventListener('fetch', event => {
+// Fetch event - serve from cache when offline
+self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
-      .then(response => {
-        // Returnează din cache dacă există, altfel face cererea la rețea
+      .then(function(response) {
+        // Return cached version or fetch from network
         if (response) {
           return response;
         }
@@ -33,14 +33,14 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Actualizarea cache-ului
-self.addEventListener('activate', event => {
+// Activate event - clean up old caches
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
+    caches.keys().then(function(cacheNames) {
       return Promise.all(
-        cacheNames.map(cacheName => {
+        cacheNames.map(function(cacheName) {
           if (cacheName !== CACHE_NAME) {
-            console.log('Ștergere cache vechi:', cacheName);
+            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
