@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Povești Magice - Scriere Creativă</title>
-    <link rel="manifest" href="./manifest.json">
-    <meta name="theme-color" content="#FF69B4">
-    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
-    <link rel="apple-touch-icon" href="./icon-192.png">
+    <title>Idei Trăsnite - Aventuri Creative pentru Copii</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FF6B6B">
     <style>
         * {
             margin: 0;
@@ -17,16 +15,16 @@
 
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: linear-gradient(135deg, #87CEEB 0%, #DDA0DD 50%, #FFB6C1 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            color: #333;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
         }
 
         .header {
@@ -36,295 +34,200 @@
         }
 
         .title {
-            font-size: 2.5em;
-            color: #FF1493;
-            text-shadow: 3px 3px 0px #FFD700, 6px 6px 10px rgba(0,0,0,0.3);
+            font-size: 3rem;
+            color: #FFE66D;
+            text-shadow: 3px 3px 0px #FF6B6B;
             margin-bottom: 10px;
-            animation: rainbow 3s infinite;
-        }
-
-        @keyframes rainbow {
-            0% { color: #FF1493; }
-            16% { color: #FF4500; }
-            33% { color: #FFD700; }
-            50% { color: #32CD32; }
-            66% { color: #00BFFF; }
-            83% { color: #8A2BE2; }
-            100% { color: #FF1493; }
+            animation: pulse 2s infinite;
         }
 
         .subtitle {
-            font-size: 1.2em;
-            color: #4B0082;
-            background: rgba(255,255,255,0.8);
+            font-size: 1.5rem;
+            color: #FFF;
+            background: rgba(255, 107, 107, 0.8);
             padding: 10px 20px;
             border-radius: 25px;
             display: inline-block;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .progress-container {
-            background: rgba(255,255,255,0.9);
-            border-radius: 25px;
-            padding: 15px;
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            animation: slideInDown 0.8s ease-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.4s; }
+        .section:nth-child(4) { animation-delay: 0.6s; }
+
+        .section-title {
+            font-size: 2rem;
+            color: #FF6B6B;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B6B, #FFE66D);
+            border-radius: 2px;
+        }
+
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #444;
+        }
+
+        .question-container {
+            background: linear-gradient(135deg, #FFE66D, #FF9F43);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .answer-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .answer-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #44A08D, #4ECDC4);
+        }
+
+        .answer-btn.correct {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            animation: correctAnswer 0.6s ease-out;
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(135deg, #ff6b6b, #ffa8a8);
+            animation: shake 0.6s ease-out;
+        }
+
+        .score-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .creative-exercise {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .exercise-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .exercise-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+        }
+
+        .option-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .option-btn.selected {
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            transform: scale(1.1);
+        }
+
+        .story-result {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #FF6B6B;
+        }
+
+        .floating-emoji {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: float 3s ease-in-out infinite;
+            z-index: 100;
         }
 
         .progress-bar {
             width: 100%;
-            height: 20px;
-            background: #E0E0E0;
-            border-radius: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            margin: 20px 0;
             overflow: hidden;
-            position: relative;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #FF69B4, #FFD700, #32CD32);
-            border-radius: 10px;
+            background: linear-gradient(90deg, #FF6B6B, #FFE66D);
+            border-radius: 5px;
             transition: width 0.5s ease;
-            position: relative;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .progress-text {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 1.1em;
-            color: #4B0082;
-            font-weight: bold;
-        }
-
-        .question-card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 3px solid #FFD700;
-            animation: slideInUp 0.6s ease-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .question-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,215,0,0.1), transparent);
-            animation: rotate 4s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .question-number {
-            background: linear-gradient(45deg, #FF69B4, #FFD700);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .question-text {
-            font-size: 1.3em;
-            color: #2E2E2E;
-            margin-bottom: 20px;
-            line-height: 1.4;
-            position: relative;
-            z-index: 1;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .option {
-            background: linear-gradient(135deg, #FFE4E1, #F0F8FF);
-            border: 3px solid #DDA0DD;
-            border-radius: 15px;
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1em;
-            color: #2E2E2E;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            border-color: #FF69B4;
-        }
-
-        .option.selected {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            border-color: #FF1493;
-            color: #4B0082;
-            font-weight: bold;
-            animation: selectedPulse 0.5s ease;
-        }
-
-        .option.correct {
-            background: linear-gradient(135deg, #90EE90, #32CD32);
-            border-color: #228B22;
-            color: #006400;
-        }
-
-        .option.incorrect {
-            background: linear-gradient(135deg, #FFB6C1, #FF69B4);
-            border-color: #DC143C;
-            color: #8B0000;
-        }
-
-        @keyframes selectedPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-            gap: 20px;
-        }
-
-        .nav-button {
-            background: linear-gradient(45deg, #FF69B4, #FFD700);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            font-family: inherit;
-        }
-
-        .nav-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-
-        .nav-button:disabled {
-            background: #CCCCCC;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .section-header {
-            background: linear-gradient(45deg, #8A2BE2, #FF1493);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            font-size: 1.5em;
-            font-weight: bold;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            animation: bounceIn 1s ease-out;
-        }
-
-        .completion-screen {
-            text-align: center;
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            animation: zoomIn 1s ease-out;
-        }
-
-        .completion-title {
-            font-size: 2.5em;
-            color: #FF1493;
-            margin-bottom: 20px;
-            animation: rainbow 3s infinite;
-        }
-
-        .score {
-            font-size: 2em;
-            color: #32CD32;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-
-        .stars {
-            font-size: 3em;
-            margin: 20px 0;
-            animation: twinkle 1s infinite alternate;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .floating-star {
-            position: absolute;
-            color: #FFD700;
-            font-size: 20px;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+            width: 0%;
         }
 
         @keyframes bounceIn {
@@ -334,446 +237,422 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        @keyframes slideInDown {
-            0% { transform: translateY(-100px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        @keyframes slideInUp {
-            0% { transform: translateY(100px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        @keyframes zoomIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes correctAnswer {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
-        .hidden {
-            display: none;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .title {
-                font-size: 2em;
-            }
-            
-            .question-text {
-                font-size: 1.1em;
-            }
-            
-            .navigation {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-button {
-                width: 100%;
-            }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            z-index: 1000;
+            animation: celebration 2s ease-out;
+        }
+
+        @keyframes celebration {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 2rem; }
+            .subtitle { font-size: 1.2rem; }
+            .section { padding: 20px; }
+            .score-display { position: relative; margin-bottom: 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="floating-elements">
-        <div class="floating-star" style="left: 10%; animation-delay: 0s;">⭐</div>
-        <div class="floating-star" style="left: 20%; animation-delay: 1s;">✨</div>
-        <div class="floating-star" style="left: 30%; animation-delay: 2s;">🌟</div>
-        <div class="floating-star" style="left: 40%; animation-delay: 3s;">⭐</div>
-        <div class="floating-star" style="left: 50%; animation-delay: 4s;">✨</div>
-        <div class="floating-star" style="left: 60%; animation-delay: 5s;">🌟</div>
-        <div class="floating-star" style="left: 70%; animation-delay: 0.5s;">⭐</div>
-        <div class="floating-star" style="left: 80%; animation-delay: 1.5s;">✨</div>
-        <div class="floating-star" style="left: 90%; animation-delay: 2.5s;">🌟</div>
+    <div class="score-display">
+        🌟 Scor: <span id="score">0</span>/20
     </div>
 
     <div class="container">
         <div class="header">
-            <h1 class="title">🌟 Povești Magice 🌟</h1>
-            <p class="subtitle">Aventuri în Scrierea Creativă</p>
+            <h1 class="title">🎨 Idei Trăsnite 🚀</h1>
+            <p class="subtitle">Aventuri Creative pentru Copii Isteți!</p>
         </div>
 
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="progress-text" id="progressText">Întrebarea 1 din 18</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
         </div>
 
-        <div id="gameContainer">
-            <div class="section-header" id="sectionHeader">
-                📚 Întrebări amuzante pe baza poveștii
+        <div class="section">
+            <h2 class="section-title">📚 Povestea Ideilor Zburătoare</h2>
+            <div class="story-text">
+                Într-o zi ploioasă, elevii clasei a III-a „Creativitate" au primit o temă de la doamna învățătoare:
+                <br><br>
+                <strong>„Găsiți o idee și transformați-o într-o poveste interesantă!"</strong>
+                <br><br>
+                Dar elevii erau cam somnoroși, așa că ideile au început... să zboare prin clasă. La propriu!
+                <br><br>
+                Una dintre ele, o idee mică și pufoasă, a sărit din mintea lui Vlad și a început să zboare ca un balon:
+                <br><br>
+                <em>— „Hei! Sunt ideea ta despre un robot care plânge cu glazură de ciocolată! Scrie-mă într-o poveste, te rog!"</em>
+                <br><br>
+                Alte idei au ieșit din capetele copiilor: o pisică detectiv, o pădure unde copacii spun bancuri, un cartof vorbitor cu planuri de evadare din supă.
             </div>
 
-            <div class="question-card" id="questionCard">
-                <div class="question-number" id="questionNumber">1</div>
-                <div class="question-text" id="questionText"></div>
-                <div class="options" id="optionsContainer"></div>
+            <div class="question-container">
+                <div class="question">1. Ideile din poveste zburau prin clasă?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Nu, stăteau cuminți în creioane</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) Da, fugeau ca baloanele spre tavan</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Da, dar doar dacă aveau bilet</button>
             </div>
 
-            <div class="navigation">
-                <button class="nav-button" id="prevButton" onclick="previousQuestion()" disabled>
-                    ⬅️ Înapoi
+            <div class="question-container">
+                <div class="question">2. Ce făcea robotul din ideea lui Vlad?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Juca fotbal cu un pepene</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Cânta operă în baie</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">C) Plângea cu glazură de ciocolată</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">3. Cum transformi o idee într-o poveste?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) O pui într-un borcan și o scuturi</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) O scrii cu început, mijloc și final</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) O mănânci cu o lingură magică</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">4. Ce spunea doamna învățătoare?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) „Gata, pauză pe viață!"</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) „Prindeți-vă ideile înainte să plece pe fereastră!"</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) „Toată lumea să alerge după cartofi!"</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">5. Ce făceau copacii în pădurea magică?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">A) Spuneau bancuri</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Își făceau selfie-uri</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Mergeau la shopping</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">6. Care dintre acestea NU e o idee din poveste?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Pisică detectiv</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Cartof vorbitor</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">C) Căpșună astronaut</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">7. Ce învață copiii din lecție?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Să spele dulapuri cu idei</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) Că orice idee poate deveni o poveste</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Că poveștile trebuie să rimeze cu „banană"</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🎻 Povestea Morcovului Muzical</h2>
+            <div class="story-text">
+                Într-o grădină plină de legume dansatoare, un morcov care cântă la vioară visează să devină faimos.
+                Numele lui era Domnul Rădăcină.
+                <br><br>
+                Într-o zi, el a găsit o cutie magică de glazură și a decorat toate instrumentele orchestrei sale cu ea. 
+                La repetiții, toate legumele alunecau, dar râdeau în hohote!
+                <br><br>
+                Seara, organizează un concert. Broccoli, dovlecei și o roșie soprană vin să-l asculte. 
+                Finalul e dulce, la propriu: publicul primește bomboane cu sunet muzical.
+            </div>
+
+            <div class="question-container">
+                <div class="question">8. Ce personaj principal apare în poveste?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Un dragon zburător</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) O pisică pilot</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">C) Un morcov care cântă la vioară</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">9. Cu ce era decorată orchestra?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Sare și piper</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) Glazură</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Jeleu picant</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">10. Ce acțiune face morcovul în poveste?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Merge la școală</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Dansează cu o ceapă</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">C) Organizează un concert</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">11. Cine a venit la concert?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Broccoli, dovlecei și roșie soprană</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) Legume din grădină</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Un porumb pitic și un castravete trist</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">12. Ce a primit publicul la final?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">A) Bomboane muzicale</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Un morcov la grătar</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) O diplomă cu semințe</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🎲 Ce-ar fi dacă...?</h2>
+
+            <div class="question-container">
+                <div class="question">13. Ce-ar fi dacă o pisică ar deveni primar?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Ar interzice șoarecii în oraș</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) Ar face legi pentru mai mult somn și lapte</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Ar construi un zgârie-nori din nisip</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">14. Ce-ar fi dacă un elefant ar merge la școală?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">A) Ar scrie cu trompa pe tablă</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Ar zbura cu ghiozdanul</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Ar mânca toate cărțile</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">15. Ce-ar fi dacă ploaia ar fi din popcorn?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Toată lumea ar purta oale pe cap</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) Am merge cu găleți la cinema</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Nimeni n-ar mai ieși din casă</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">16. Ce-ar fi dacă un dragon ar avea telefon mobil?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">A) Ar trimite mesaje cu emoji de foc</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Ar vorbi doar în limba pădurii</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Ar topi bateria în 5 secunde</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">17. Ce-ar fi dacă dulapul tău ar avea o lume secretă?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Ai merge în vacanță cu șosetele tale</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Ai găsi acolo temele pierdute</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">C) Ai intra într-o poveste cu dragoni, biscuiți și bufnițe dansatoare</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">18. Ce-ar fi dacă un morcov ar fi super-erou?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Ar purta chiloți peste costum</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Ar zbura cu o rachetă din salată</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">C) Ar salva lumea de legume plictisitoare</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🧠 Creează-ți Propria Poveste!</h2>
+            <div class="creative-exercise">
+                <div class="exercise-title">Alege câte un element din fiecare categorie:</div>
+                
+                <h3>🖼 Imagine (personaj):</h3>
+                <div class="exercise-options">
+                    <button class="option-btn" onclick="selectOption('image', this, 'Un dragon care poartă o pălărie de bucătar')">🐲 Dragon bucătar</button>
+                    <button class="option-btn" onclick="selectOption('image', this, 'O pisică într-o navă spațială')">🐱 Pisică astronaut</button>
+                    <button class="option-btn" onclick="selectOption('image', this, 'Un morcov care cântă la vioară')">🥕 Morcov muzician</button>
+                </div>
+
+                <h3>💬 Cuvânt magic:</h3>
+                <div class="exercise-options">
+                    <button class="option-btn" onclick="selectOption('word', this, 'Glazură')">✨ Glazură</button>
+                    <button class="option-btn" onclick="selectOption('word', this, 'Tornadă')">🌪️ Tornadă</button>
+                    <button class="option-btn" onclick="selectOption('word', this, 'Vulcan')">🌋 Vulcan</button>
+                </div>
+
+                <h3>🔄 Acțiune:</h3>
+                <div class="exercise-options">
+                    <button class="option-btn" onclick="selectOption('action', this, 'Aleargă după un autobuz')">🚌 Aleargă după autobuz</button>
+                    <button class="option-btn" onclick="selectOption('action', this, 'Organizează un concert')">🎵 Organizează concert</button>
+                    <button class="option-btn" onclick="selectOption('action', this, 'Face sport în pijamale')">🏃 Sport în pijamale</button>
+                </div>
+
+                <button class="answer-btn" onclick="generateStory()" style="margin-top: 20px; background: linear-gradient(135deg, #FF6B6B, #FFE66D);">
+                    🎨 Creează Povestea Magică!
                 </button>
-                <button class="nav-button" id="nextButton" onclick="nextQuestion()" disabled>
-                    Următoarea ➡️
-                </button>
-            </div>
-        </div>
 
-        <div id="completionScreen" class="completion-screen hidden">
-            <h2 class="completion-title">🎉 Felicitări! 🎉</h2>
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <div class="score" id="finalScore"></div>
-            <p style="font-size: 1.2em; color: #4B0082; margin: 20px 0;">
-                Ai terminat toate exercițiile de scriere creativă!<br>
-                Imaginația ta este cu adevărat magică! ✨
-            </p>
-            <button class="nav-button" onclick="restartGame()">
-                🔄 Joacă din nou
-            </button>
+                <div id="storyResult" class="story-result" style="display: none;">
+                    <h3>📖 Povestea ta:</h3>
+                    <div id="generatedStory"></div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">19. Care este cel mai important lucru când creezi o poveste?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Să aibă multe pagini</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">B) Să folosești imaginația și să te distrezi</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">C) Să scrii doar despre animale</button>
+            </div>
+
+            <div class="question-container">
+                <div class="question">20. Ce faci când nu îți vine o idee pentru poveste?</div>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">A) Renunți și te uiți la televizor</button>
+                <button class="answer-btn" onclick="checkAnswer(this, false)">B) Copiezi o poveste din carte</button>
+                <button class="answer-btn" onclick="checkAnswer(this, true)">C) Te uiți în jur și întrebi „Ce-ar fi dacă...?"</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Datele cu întrebările din PDF
-        const questions = [
-            // Secțiunea 1: Întrebări amuzante pe baza poveștii
-            {
-                section: "📚 Întrebări amuzante pe baza poveștii",
-                question: "Ideile din poveste zburau prin clasă?",
-                options: [
-                    "Nu, stăteau cuminți în creioane",
-                    "Da, fugeau ca baloanele spre tavan",
-                    "Da, dar doar dacă aveau bilet"
-                ],
-                correct: 1
-            },
-            {
-                section: "📚 Întrebări amuzante pe baza poveștii",
-                question: "Ce făcea robotul din ideea lui Vlad?",
-                options: [
-                    "Juca fotbal cu un pepene",
-                    "Cânta operă în baie",
-                    "Plângea cu glazură de ciocolată"
-                ],
-                correct: 2
-            },
-            {
-                section: "📚 Întrebări amuzante pe baza poveștii",
-                question: "Cum transformi o idee într-o poveste?",
-                options: [
-                    "O pui într-un borcan și o scuturi",
-                    "O scrii cu început, mijloc și final",
-                    "O mănânci cu o lingură magică"
-                ],
-                correct: 1
-            },
-            {
-                section: "📚 Întrebări amuzante pe baza poveștii",
-                question: "Ce spunea doamna învățătoare?",
-                options: [
-                    "Gata, pauză pe viață!",
-                    "Prindeți-vă ideile înainte să plece pe fereastră!",
-                    "Toată lumea să alerge după cartofi!"
-                ],
-                correct: 1
-            },
-            {
-                section: "📚 Întrebări amuzante pe baza poveștii",
-                question: "Ce făceau copacii în pădurea magică?",
-                options: [
-                    "Spuneau bancuri",
-                    "Își făceau selfie-uri",
-                    "Mergeau la shopping"
-                ],
-                correct: 0
-            },
-            {
-                section: "📚 Întrebări amuzante pe baza poveștii",
-                question: "Care dintre acestea NU e o idee din poveste?",
-                options: [
-                    "Pisică detectiv",
-                    "Cartof vorbitor",
-                    "Căpșună astronaut"
-                ],
-                correct: 2
-            },
-            {
-                section: "📚 Întrebări amuzante pe baza poveștii",
-                question: "Ce învață copiii din lecție?",
-                options: [
-                    "Să spele dulapuri cu idei",
-                    "Că orice idee poate deveni o poveste",
-                    "Că poveștile trebuie să rimeze cu „banană""
-                ],
-                correct: 1
-            },
-            // Secțiunea 2: Întrebări cu variante
-            {
-                section: "🎯 Întrebări cu variante",
-                question: "Ce personaj principal apare în poveste?",
-                options: [
-                    "Un dragon zburător",
-                    "O pisică pilot",
-                    "Un morcov care cântă la vioară"
-                ],
-                correct: 2
-            },
-            {
-                section: "🎯 Întrebări cu variante",
-                question: "Cu ce era decorată orchestra?",
-                options: [
-                    "Sare și piper",
-                    "Glazură",
-                    "Jeleu picant"
-                ],
-                correct: 1
-            },
-            {
-                section: "🎯 Întrebări cu variante",
-                question: "Ce acțiune face morcovul în poveste?",
-                options: [
-                    "Merge la școală",
-                    "Dansează cu o ceapă",
-                    "Organizează un concert"
-                ],
-                correct: 2
-            },
-            {
-                section: "🎯 Întrebări cu variante",
-                question: "Cine a venit la concert?",
-                options: [
-                    "Broccoli, dovlecei și roșie soprană",
-                    "Legume din grădină",
-                    "Un porumb pitic și un castravete trist"
-                ],
-                correct: 1
-            },
-            {
-                section: "🎯 Întrebări cu variante",
-                question: "Ce a primit publicul la final?",
-                options: [
-                    "Bomboane muzicale",
-                    "Un morcov la grătar",
-                    "O diplomă cu semințe"
-                ],
-                correct: 0
-            },
-            // Secțiunea 3: "Ce-ar fi dacă...?"
-            {
-                section: "🎲 Ce-ar fi dacă...?",
-                question: "Ce-ar fi dacă o pisică ar deveni primar?",
-                options: [
-                    "Ar interzice șoarecii în oraș",
-                    "Ar face legi pentru mai mult somn și lapte",
-                    "Ar construi un zgârie-nori din nisip"
-                ],
-                correct: 1
-            },
-            {
-                section: "🎲 Ce-ar fi dacă...?",
-                question: "Ce-ar fi dacă un elefant ar merge la școală?",
-                options: [
-                    "Ar scrie cu trompa pe tablă",
-                    "Ar zbura cu ghiozdanul",
-                    "Ar mânca toate cărțile"
-                ],
-                correct: 0
-            },
-            {
-                section: "🎲 Ce-ar fi dacă...?",
-                question: "Ce-ar fi dacă ploaia ar fi din popcorn?",
-                options: [
-                    "Toată lumea ar purta oale pe cap",
-                    "Am merge cu găleți la cinema",
-                    "Nimeni n-ar mai ieși din casă"
-                ],
-                correct: 1
-            },
-            {
-                section: "🎲 Ce-ar fi dacă...?",
-                question: "Ce-ar fi dacă un dragon ar avea telefon mobil?",
-                options: [
-                    "Ar trimite mesaje cu emoji de foc",
-                    "Ar vorbi doar în limba pădurii",
-                    "Ar topi bateria în 5 secunde"
-                ],
-                correct: 0
-            },
-            {
-                section: "🎲 Ce-ar fi dacă...?",
-                question: "Ce-ar fi dacă dulapul tău ar avea o lume secretă?",
-                options: [
-                    "Ai merge în vacanță cu șosetele tale",
-                    "Ai găsi acolo temele pierdute",
-                    "Ai intra într-o poveste cu dragoni, biscuiți și bufnițe dansatoare"
-                ],
-                correct: 2
-            },
-            {
-                section: "🎲 Ce-ar fi dacă...?",
-                question: "Ce-ar fi dacă un morcov ar fi super-erou?",
-                options: [
-                    "Ar purta chiloți peste costum",
-                    "Ar zbura cu o rachetă din salată",
-                    "Ar salva lumea de legume plictisitoare"
-                ],
-                correct: 2
-            }
-        ];
-
-        let currentQuestion = 0;
         let score = 0;
-        let selectedAnswer = null;
-        let currentSection = "";
+        let totalQuestions = 20;
+        let answeredQuestions = 0;
+        let selectedOptions = {
+            image: '',
+            word: '',
+            action: ''
+        };
 
-        function initGame() {
-            showQuestion();
+        function checkAnswer(button, isCorrect) {
+            // Disable all buttons in this question
+            const questionContainer = button.parentElement;
+            const allButtons = questionContainer.querySelectorAll('.answer-btn');
+            allButtons.forEach(btn => btn.style.pointerEvents = 'none');
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                score++;
+                createFloatingEmoji('🎉', button);
+                if (score === totalQuestions) {
+                    setTimeout(() => showCelebration(), 500);
+                }
+            } else {
+                button.classList.add('incorrect');
+                createFloatingEmoji('😅', button);
+            }
+
+            answeredQuestions++;
+            updateScore();
             updateProgress();
         }
 
-        function showQuestion() {
-            const question = questions[currentQuestion];
-            
-            // Actualizează secțiunea dacă s-a schimbat
-            if (currentSection !== question.section) {
-                currentSection = question.section;
-                document.getElementById('sectionHeader').textContent = question.section;
-                document.getElementById('sectionHeader').style.animation = 'bounceIn 1s ease-out';
-            }
-
-            document.getElementById('questionNumber').textContent = currentQuestion + 1;
-            document.getElementById('questionText').textContent = question.question;
-            
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
-            
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.textContent = option;
-                optionElement.onclick = () => selectAnswer(index);
-                optionsContainer.appendChild(optionElement);
-            });
-
-            selectedAnswer = null;
-            updateNavigationButtons();
-            
-            // Resetează animația cardului
-            const questionCard = document.getElementById('questionCard');
-            questionCard.style.animation = 'none';
-            setTimeout(() => {
-                questionCard.style.animation = 'slideInUp 0.6s ease-out';
-            }, 10);
-        }
-
-        function selectAnswer(answerIndex) {
-            // Elimină selecția anterioară
-            document.querySelectorAll('.option').forEach(option => {
-                option.classList.remove('selected', 'correct', 'incorrect');
-            });
-
-            selectedAnswer = answerIndex;
-            const options = document.querySelectorAll('.option');
-            options[answerIndex].classList.add('selected');
-
-            // Afișează răspunsul corect după o scurtă întârziere
-            setTimeout(() => {
-                const correctAnswer = questions[currentQuestion].correct;
-                options[correctAnswer].classList.add('correct');
-                
-                if (answerIndex === correctAnswer) {
-                    score++;
-                } else {
-                    options[answerIndex].classList.add('incorrect');
-                }
-                
-                updateNavigationButtons();
-            }, 500);
-        }
-
-        function updateNavigationButtons() {
-            const prevButton = document.getElementById('prevButton');
-            const nextButton = document.getElementById('nextButton');
-            
-            prevButton.disabled = currentQuestion === 0;
-            nextButton.disabled = selectedAnswer === null;
-            
-            if (currentQuestion === questions.length - 1 && selectedAnswer !== null) {
-                nextButton.textContent = 'Finalizează 🏆';
-            } else {
-                nextButton.textContent = 'Următoarea ➡️';
-            }
-        }
-
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion();
-                updateProgress();
-            }
-        }
-
-        function nextQuestion() {
-            if (selectedAnswer === null) return;
-            
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                showQuestion();
-                updateProgress();
-            } else {
-                showCompletionScreen();
-            }
+        function updateScore() {
+            document.getElementById('score').textContent = score;
         }
 
         function updateProgress() {
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            document.getElementById('progressText').textContent = 
-                `Întrebarea ${currentQuestion + 1} din ${questions.length}`;
+            const progress = (answeredQuestions / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
         }
 
-        function showCompletionScreen() {
-            document.getElementById('gameContainer').classList.add('hidden');
-            document.getElementById('completionScreen').classList.remove('hidden');
+        function createFloatingEmoji(emoji, element) {
+            const floatingEmoji = document.createElement('div');
+            floatingEmoji.className = 'floating-emoji';
+            floatingEmoji.textContent = emoji;
             
-            const percentage = Math.round((score / questions.length) * 100);
-            document.getElementById('finalScore').textContent = 
-                `Scorul tău: ${score}/${questions.length} (${percentage}%)`;
+            const rect = element.getBoundingClientRect();
+            floatingEmoji.style.left = rect.left + rect.width / 2 + 'px';
+            floatingEmoji.style.top = rect.top + 'px';
+            
+            document.body.appendChild(floatingEmoji);
+            
+            setTimeout(() => {
+                floatingEmoji.remove();
+            }, 3000);
         }
 
-        function restartGame() {
-            currentQuestion = 0;
-            score = 0;
-            selectedAnswer = null;
-            currentSection = "";
+        function showCelebration() {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = '🎊 FELICITĂRI! 🎊';
+            document.body.appendChild(celebration);
             
-            document.getElementById('gameContainer').classList.remove('hidden');
-            document.getElementById('completionScreen').classList.add('hidden');
-            
-            initGame();
+            setTimeout(() => {
+                celebration.remove();
+            }, 2000);
         }
 
-        // Înregistrează service worker-ul
+        function selectOption(category, button, value) {
+            // Remove selected class from all buttons in this category
+            const categoryButtons = button.parentElement.querySelectorAll('.option-btn');
+            categoryButtons.forEach(btn => btn.classList.remove('selected'));
+            
+            // Add selected class to clicked button
+            button.classList.add('selected');
+            selectedOptions[category] = value;
+        }
+
+        function generateStory() {
+            if (!selectedOptions.image || !selectedOptions.word || !selectedOptions.action) {
+                alert('Te rog să alegi câte o opțiune din fiecare categorie! 😊');
+                return;
+            }
+
+            const stories = [
+                `Într-o zi magică, ${selectedOptions.image.toLowerCase()} a descoperit puterea cuvântului "${selectedOptions.word.toLowerCase()}". Când a început să ${selectedOptions.action.toLowerCase()}, s-au întâmplat lucruri incredibile! Toate animalele din pădure au venit să vadă spectacolul, iar la final toți au dansat împreună sub stelele strălucitoare.`,
+                
+                `Era odată ca niciodată ${selectedOptions.image.toLowerCase()} care avea un secret: de fiecare dată când spunea cuvântul "${selectedOptions.word.toLowerCase()}", putea să ${selectedOptions.action.toLowerCase()} în moduri fantastice! Într-o zi, acest secret a salvat întreaga lume de plictiseală, aducând zâmbete pe fețele tuturor.`,
+                
+                `În țara poveștilor trăsnite, ${selectedOptions.image.toLowerCase()} era cunoscut pentru talentul său special. Cu ajutorul magiei din cuvântul "${selectedOptions.word.toLowerCase()}", el reușea să ${selectedOptions.action.toLowerCase()} și să creeze cele mai frumoase aventuri. Toți prietenii săi îl admirau și învățau de la el că imaginația nu are limite!`
+            ];
+
+            const randomStory = stories[Math.floor(Math.random() * stories.length)];
+            
+            document.getElementById('generatedStory').innerHTML = `
+                <p style="font-size: 1.1rem; line-height: 1.6; color: #333;">
+                    ${randomStory}
+                </p>
+                <p style="margin-top: 15px; font-style: italic; color: #666;">
+                    🌟 Felicitări! Ai creat o poveste minunată folosind imaginația ta!
+                </p>
+            `;
+            
+            document.getElementById('storyResult').style.display = 'block';
+            document.getElementById('storyResult').scrollIntoView({ behavior: 'smooth' });
+            
+            createFloatingEmoji('📚', document.querySelector('.creative-exercise'));
+        }
+
+        // Add some random floating emojis for ambiance
+        function addRandomFloatingEmojis() {
+            const emojis = ['⭐', '🌈', '🎨', '📚', '🚀', '🎭', '🎪', '🎠'];
+            const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            const floatingEmoji = document.createElement('div');
+            floatingEmoji.className = 'floating-emoji';
+            floatingEmoji.textContent = emoji;
+            floatingEmoji.style.left = Math.random() * window.innerWidth + 'px';
+            floatingEmoji.style.top = Math.random() * window.innerHeight + 'px';
+            
+            document.body.appendChild(floatingEmoji);
+            
+            setTimeout(() => {
+                floatingEmoji.remove();
+            }, 3000);
+        }
+
+        // Add floating emojis every 5 seconds
+        setInterval(addRandomFloatingEmojis, 5000);
+
+        // Register service worker
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(registration => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch(registrationError => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
+            navigator.serviceWorker.register('sw.js');
         }
-
-        // Inițializează jocul când se încarcă pagina
-        document.addEventListener('DOMContentLoaded', initGame);
-        window.addEventListener('load', initGame);
     </script>
 </body>
 </html>
